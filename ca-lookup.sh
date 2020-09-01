@@ -13,6 +13,12 @@ YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+function SANITISE_DOMAIN {
+    DOMAIN=$(echo $DOMAIN | sed 's,http://,,g' | sed 's,https://,,g' | sed 's,/,,g' | sed 's,www.,,g' )
+}
+
+SANITISE_DOMAIN
+
 echo "
 Probing Domain: $DOMAIN (Expiry: $EXPIRY_DATE)
 
