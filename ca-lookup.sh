@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-DOMAIN="$1"
+DOMAIN=$(echo $1 | sed 's,http://,,g' | sed 's,https://,,g' | sed 's,/,,g' | sed 's,www.,,g' )
 EXPIRY_DATE=$(whois $DOMAIN | grep -i "expiry date:" | sed -e 's/   Registry Expiry Date: //g' | sed -e 's/        Expiry date:  //g')
 A_RECORD=$(dig $DOMAIN A +short)
 RDNS_HOSTNAME=$(dig -x $A_RECORD +short)
@@ -12,12 +12,6 @@ RED='\033[0;31m'
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
-
-function SANITISE_DOMAIN {
-    DOMAIN=$(echo $DOMAIN | sed 's,http://,,g' | sed 's,https://,,g' | sed 's,/,,g' | sed 's,www.,,g' )
-}
-
-SANITISE_DOMAIN
 
 echo "
 Probing Domain: $DOMAIN (Expiry: $EXPIRY_DATE)
