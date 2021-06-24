@@ -34,11 +34,11 @@ if [ "$DIG_STATUS" != "0" ]
 then
     echo "The package: dig is not installed, would you like me to install it with:"
     echo ""
-    echo "sudo apt install dig -y"
+    echo "sudo apt install dnsutils -y"
     echo ""
     echo "Press the enter key to proceed with installation or if you wish to cancel press CTRL + C"
     read -p ""
-    sudo apt install dig -y
+    sudo apt install dnsutils -y
     DIG_INSTALL_STATUS=$(echo $?)
         if [ "$DIG_INSTALL_STATUS" != "0" ]
         then
@@ -49,7 +49,7 @@ then
 fi
 
 # Variables & Functions
-VERSION="1.1.1"
+VERSION="1.2.0"
 DOMAIN=$(echo $1 | sed 's,http://,,g' | sed 's,https://,,g' | sed 's,/,,g' | sed 's,www.,,g' )
 EXPIRY_DATE=$(whois $DOMAIN | grep -i "expiry date:" | sed -e 's/   Registry Expiry Date: //g' | sed -e 's/        Expiry date:  //g')
 A_RECORD=$(dig $DOMAIN A +short)
