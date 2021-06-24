@@ -3,6 +3,8 @@
 # Author: Ashley Cawley // @ashleycawley
 
 # Checks for dependencies and offers to install them if not present
+
+# WHOIS Check
 which whois &>/dev/null
 WHOIS_STATUS=$(echo $?)
 
@@ -20,6 +22,28 @@ then
         then
             echo "The installation did not complete successfully."
             echo "Please install whois using the relevant package manager for your OS."
+            exit 1
+        fi
+fi
+
+# DIG Check
+which dig &>/dev/null
+DIG_STATUS=$(echo $?)
+
+if [ "$DIG_STATUS" != "0" ]
+then
+    echo "The package: dig is not installed, would you like me to install it with:"
+    echo ""
+    echo "sudo apt install dig -y"
+    echo ""
+    echo "Press the enter key to proceed with installation or if you wish to cancel press CTRL + C"
+    read -p ""
+    sudo apt install dig -y
+    DIG_INSTALL_STATUS=$(echo $?)
+        if [ "$DIG_INSTALL_STATUS" != "0" ]
+        then
+            echo "The installation did not complete successfully."
+            echo "Please install dig using the relevant package manager for your OS."
             exit 1
         fi
 fi
