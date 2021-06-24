@@ -9,9 +9,10 @@ WHOIS_STATUS=$(echo $?)
 if [ "$WHOIS_STATUS" != "0" ]
 then
     echo "The package: whois is not installed, would you like me to install it with:"
+    echo ""
     echo "sudo apt install whois -y"
     echo ""
-    echo "Press any key to process, or if you wish to cancel press CTRL + C"
+    echo "Press the enter key to proceed with installation or if you wish to cancel press CTRL + C"
     read -p ""
     sudo apt install whois -y
     WHOIS_INSTALL_STATUS=$(echo $?)
@@ -24,7 +25,7 @@ then
 fi
 
 # Variables & Functions
-VERSION="1.1.0"
+VERSION="1.1.1"
 DOMAIN=$(echo $1 | sed 's,http://,,g' | sed 's,https://,,g' | sed 's,/,,g' | sed 's,www.,,g' )
 EXPIRY_DATE=$(whois $DOMAIN | grep -i "expiry date:" | sed -e 's/   Registry Expiry Date: //g' | sed -e 's/        Expiry date:  //g')
 A_RECORD=$(dig $DOMAIN A +short)
