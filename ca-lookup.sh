@@ -114,6 +114,7 @@ else
     exit 1
 fi
 
-echo "ca-lookup Version: $VERSION | Source code available at: http://swb.me/calookup"
+echo "ca-lookup Version: $VERSION | Source code available at: http://swb.me/calookup
+"
 
 exit 0
