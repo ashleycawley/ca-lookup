@@ -77,8 +77,6 @@ else
 fi
 
 echo "
-ca-lookup Version: $VERSION | Source code available at: http://swb.me/calookup
-
  -------------------------------------------------------------------------
 | Domain  :   $DOMAIN expires on $EXPIRY_DATE
  -------------------------------------------------------------------------
@@ -115,5 +113,7 @@ else
     echo ""
     exit 1
 fi
+
+echo "ca-lookup Version: $VERSION | Source code available at: http://swb.me/calookup"
 
 exit 0
