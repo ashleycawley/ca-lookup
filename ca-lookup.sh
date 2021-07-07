@@ -49,7 +49,7 @@ then
 fi
 
 # Variables & Functions
-VERSION="1.2.0"
+VERSION="1.3.0"
 DOMAIN=$(echo $1 | sed 's,http://,,g' | sed 's,https://,,g' | sed 's,/,,g' | sed 's,www.,,g' )
 LOOKING_FOR_NS=$(whois -H $DOMAIN)
 COM_NS_CHECK=$(echo "$LOOKING_FOR_NS" | grep "^Name Server:" | sed 's/Name Server: //g')
@@ -82,7 +82,7 @@ ca-lookup Version: $VERSION | Source code available at: http://swb.me/calookup
  -------------------------------------------------------------------------
 | Domain  :   $DOMAIN expires on $EXPIRY_DATE
  -------------------------------------------------------------------------
-| Nameservers  :
+| Nameservers:
 $NS
 -------------------------------------------------------------------------
 | Server  :   $RDNS_HOSTNAME
