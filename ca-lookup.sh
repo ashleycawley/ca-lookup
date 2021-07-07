@@ -51,6 +51,9 @@ fi
 # Variables & Functions
 VERSION="1.2.0"
 DOMAIN=$(echo $1 | sed 's,http://,,g' | sed 's,https://,,g' | sed 's,/,,g' | sed 's,www.,,g' )
+LOOKING_FOR_NS=$(whois -H $DOMAIN)
+COM_NS_CHECK=$(echo "$LOOKING_FOR_NS" | grep "^Name Server:" | sed 's/Name Server: //g')
+CO_UK_NS_CHECK=$(echo "$LOOKING_FOR_NS" | grep -A 2 "Name servers:" | sed '/Name servers:/d' | sed 's/^ *//g' | awk '{print $1}')
 EXPIRY_DATE=$(whois $DOMAIN | grep -i "expiry date:" | sed -e 's/   Registry Expiry Date: //g' | sed -e 's/        Expiry date:  //g')
 A_RECORD=$(dig $DOMAIN A +short)
 RDNS_HOSTNAME=$(dig -x $A_RECORD +short)
@@ -65,12 +68,22 @@ YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+# Populates $NS with Nameserver Records depending on if its ICANN .com/.org etc. vs NOMINET .co.uk/.uk etc.
+if [ -z "$COM_NS_CHECK" ]
+then
+	NS="$CO_UK_NS_CHECK"
+else
+	NS="$COM_NS_CHECK"
+fi
+
 echo "
 ca-lookup Version: $VERSION | Source code available at: http://swb.me/calookup
 
  -------------------------------------------------------------------------
 | Domain  :   $DOMAIN expires on $EXPIRY_DATE
  -------------------------------------------------------------------------
+| Nameservers  :   $NS
+-------------------------------------------------------------------------
 | Server  :   $RDNS_HOSTNAME
  -------------------------------------------------------------------------
 | A       :   $DOMAIN - $A_RECORD
