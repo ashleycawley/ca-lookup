@@ -19,4 +19,7 @@ check example.com
 
 ```sudo cp ca-lookup.sh /usr/bin/check```
 
-3) Give it a whirl! It may work for you immediately or you may need to reload your Terminal session first.
+3) Make it executable:
+```chmod +x ca-lookup.sh```
+
+4) Give it a whirl! It may work for you immediately or you may need to reload your Terminal session first.
