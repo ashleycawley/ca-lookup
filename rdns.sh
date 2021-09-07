@@ -27,9 +27,10 @@ fi
 # Variables & Functions
 VERSION="0.1"
 DOMAIN=$(echo $1 | sed 's,http://,,g' | sed 's,https://,,g' | sed 's,/,,g' | sed 's,www.,,g' )
+A_RECORD=$(dig $DOMAIN A +short)
 RDNS_HOSTNAME=$(dig -x $A_RECORD +short)
 
 # Script
-echo "$DOMAIN is on Server: $RDNS_HOSTNAME"
+echo "$DOMAIN is on server: $RDNS_HOSTNAME"
 
 exit 0
