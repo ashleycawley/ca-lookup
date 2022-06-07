@@ -74,12 +74,14 @@ else
     RDNS_HOSTNAME=$(dig -x $A_RECORD +short)
 fi
 
+# Retreiving information to build the report
 EXPIRY_DATE=$(whois $DOMAIN | grep -i "expiry date:" | sed -e 's/   Registry Expiry Date: //g' | sed -e 's/        Expiry date:  //g')
 WWW_RECORD=$(dig www.$DOMAIN A +short | grep -v $DOMAIN)
 MAIL_RECORD=$(dig mail.$DOMAIN A +short | grep -v $DOMAIN)
 MX_RECORD=$(dig $DOMAIN MX +short)
 TXT_RECORD=$(dig $DOMAIN TXT +short)
-
+TTL_A_RECORD=$(dig +nocmd +noall +answer $DOMAIN | grep ^$DOMAIN | awk '{print $2}')
+TTL_MAIL=$(dig +nocmd +noall +answer mail.datingprofileheroes.com | grep ^mail.datingprofileheroes.com | awk '{print $2}')
 
 
 # Populates $NS with Nameserver Records depending on if its ICANN .com/.org etc. vs NOMINET .co.uk/.uk etc.
@@ -100,10 +102,12 @@ $NS
 | Server  :   $RDNS_HOSTNAME
  -------------------------------------------------------------------------
 | A       :   $DOMAIN - $A_RECORD
+| TTL     :   $TTL_A_RECORD
  -------------------------------------------------------------------------
 | WWW.    :   $WWW_RECORD
  -------------------------------------------------------------------------
 | MAIL.   :   $MAIL_RECORD
+| TTL     :   $TTL_MAIL
  -------------------------------------------------------------------------
 | MX Record(s)
 $MX_RECORD
